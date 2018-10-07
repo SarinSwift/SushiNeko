@@ -1,17 +1,16 @@
 //
 //  SushiPiece.swift
-//  SushiNeko
+//  SushiNeko1
 //
-//  Created by Sarin Swift on 10/2/18.
+//  Created by Sarin Swift on 10/6/18.
 //  Copyright © 2018 sarinswift. All rights reserved.
 //
 
-import Foundation
 import SpriteKit
 
 class SushiPiece: SKSpriteNode {
     
-    /* chopstick objects */
+    /* Chopsticks objects */
     var rightChopstick: SKSpriteNode!
     var leftChopstick: SKSpriteNode!
     
@@ -31,20 +30,18 @@ class SushiPiece: SKSpriteNode {
             }
         }
     }
+
     
-    
-    
-    /* override init and super.init
-     required for subclass to work */
+    /* You are required to implement this for your subclass to work */
     override init(texture: SKTexture?, color: UIColor, size: CGSize) {
         super.init(texture: texture, color: color, size: size)
     }
     
-    /* required init
-     required for subclass to work */
+    /* You are required to implement this for your subclass to work */
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
+    
     
     func connectChopsticks() {
         /* Connect our child chopstick nodes */
@@ -53,5 +50,25 @@ class SushiPiece: SKSpriteNode {
         side = .none
     }
     
-   
+    func flip(_ side: Side) {
+        var actionName: String = ""
+        
+        // flips the sushi out of the screen
+        if side == .left {
+            actionName = "FlipRight"
+        } else if side == .right {
+            actionName = "FlipLeft"
+        }
+        
+        // load the action
+        let flip = SKAction(named: actionName)!
+        
+        // create a node removal action
+        let remove = SKAction.removeFromParent()
+        
+        // build the sequence
+        let sequence = SKAction.sequence([flip, remove])
+        run(sequence)
+    }
+    
 }
